@@ -2,6 +2,7 @@ package mesosphere.util
 
 import scala.concurrent._
 import scala.Some
+import java.util.concurrent.ExecutionException
 
 
 object BackToTheFuture {
@@ -10,11 +11,20 @@ object BackToTheFuture {
 
   implicit def FutureToFutureOption[T](f: java.util.concurrent.Future[T]): Future[Option[T]] = {
     future {
-      val t = f.get
-      if (t == null) {
-        None
-      } else {
-        Some(t)
+      try {
+        Option(f.get)
+      } catch {
+        case e: ExecutionException => throw e.getCause
+      }
+    }
+  }
+
+  implicit def FutureToFuture[T](f: java.util.concurrent.Future[T]): Future[T] = {
+    future {
+      try {
+        f.get
+      } catch {
+        case e: ExecutionException => throw e.getCause
       }
     }
   }
