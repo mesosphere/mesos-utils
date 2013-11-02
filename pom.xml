@@ -4,7 +4,7 @@
 
     <groupId>mesosphere</groupId>
     <artifactId>mesos-utils</artifactId>
-    <version>0.0.5</version>
+    <version>0.0.6-SNAPSHOT</version>
 
     <properties>
         <encoding>UTF-8</encoding>
