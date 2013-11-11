@@ -1,6 +1,7 @@
 package mesosphere.util
 
-import java.util.logging.{Logger, Level}
+import scala.util.Try
+import scala.concurrent.duration.Duration
 
 /**
  * @author Florian Leibert
@@ -8,30 +9,36 @@ import java.util.logging.{Logger, Level}
 
 object Retry {
 
-  val log = Logger.getLogger(getClass.getName)
-
   /**
-   * Retries a function
-   * @param max the maximum retries
-   * @param attempt the current attempt number
-   * @param i the input
-   * @param fnc the function to wrap
-   * @tparam I the input parameter type
-   * @tparam O the output parameter type
-   * @return either Some(instanceOf[O]) or None if more exceptions occurred than permitted by max.
+   * A general timed retry combinator, with a `try-catch` flavor.
+   *
+   * {{{
+   * retry(2, 2.seconds) {
+   *   throw new java.lang.IllegalStateException
+   * } {
+   *  catch e: java.lang.IllegalStateException =>
+   *    System.err.println("Illegal state encountered.")
+   * }
+   * }}}
+   *
+   * @param n       Times to retry. 0 means the block is evaluated once.
+   * @param d       Time to wait between retries.
+   * @param fnc     Block to evaluate.
+   * @param handler Handler block for exceptions.
+   * @tparam T      Result type.
+   * @return        Result of evaluation of `fnc`, if successful.
    */
-  def retry[I, O](max: Int, attempt: Int, i: I, fnc: (I) => O): Option[O] = {
-    try {
-      Some(fnc(i))
-    } catch {
-      case t: Throwable => if (attempt < max) {
-        log.log(Level.WARNING, "Retrying attempt:" + attempt, t)
-        retry(max, attempt + 1, i, fnc)
-      } else {
-        log.severe("Giving up after attempts:" + attempt)
-        None
-      }
+  def retry[T](n: Int, d: Duration)
+              (fnc: => T)
+              (handler: PartialFunction[Throwable, Any]): T = {
+    for (n <- 1 to n) {
+      // Note that Try catches only non-fatal exceptions.
+      val attempt: Try[T] = Try(fnc)
+      if (attempt.isSuccess) return attempt.get
+      attempt.recover(handler).get // Throws if handler can't handle it.
+      Thread.sleep(d.toMillis)
     }
+    fnc // Our last, best hope.
   }
 
 }
