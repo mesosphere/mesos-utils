@@ -2,7 +2,7 @@ package mesosphere.mesos.util
 
 import org.apache.mesos.state.State
 import mesosphere.util.BackToTheFuture
-import org.apache.mesos.Protos.{FrameworkInfo, FrameworkID}
+import org.apache.mesos.Protos.{FrameworkInfo => FrameworkInfoProto, FrameworkID => FrameworkIDProto}
 import com.google.protobuf.InvalidProtocolBufferException
 import java.util.logging.{Level, Logger}
 import scala.util.{Failure, Success}
@@ -24,11 +24,11 @@ class FrameworkIdUtil(val state: State, val key: String = "frameworkId") {
   import BackToTheFuture.FutureToFutureOption
   import ExecutionContext.Implicits.global
 
-  def fetch(wait: Duration = defaultWait): Option[FrameworkID] = {
-    val f: Future[Option[FrameworkID]] = state.fetch(key).map {
+  def fetch(wait: Duration = defaultWait): Option[FrameworkIDProto] = {
+    val f: Future[Option[FrameworkIDProto]] = state.fetch(key).map {
       case Some(variable) if variable.value().length > 0 => {
         try {
-          val frameworkId = FrameworkID.parseFrom(variable.value())
+          val frameworkId = FrameworkIDProto.parseFrom(variable.value())
           Some(frameworkId)
         } catch {
           case e: InvalidProtocolBufferException => {
@@ -42,7 +42,7 @@ class FrameworkIdUtil(val state: State, val key: String = "frameworkId") {
     Await.result(f, wait)
   }
 
-  def store(frameworkId: FrameworkID) {
+  def store(frameworkId: FrameworkIDProto) {
     state.fetch(key).map {
       case Some(oldVariable) => {
         val newVariable = oldVariable.mutate(frameworkId.toByteArray)
@@ -59,7 +59,7 @@ class FrameworkIdUtil(val state: State, val key: String = "frameworkId") {
     }
   }
 
-  def setIdIfExists(frameworkInfo: FrameworkInfo.Builder) {
+  def setIdIfExists(frameworkInfo: FrameworkInfoProto.Builder) {
     fetch() match {
       case Some(id) => {
         log.info("Setting framework ID to %s".format(id.getValue))

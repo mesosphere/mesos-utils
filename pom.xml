@@ -11,7 +11,7 @@
 
         <!-- language versions -->
         <java.abi>1.6</java.abi>
-        <scala.version>2.10.2</scala.version>
+        <scala.version>2.10.3</scala.version>
 
         <!-- runtime deps versions -->
         <mesos.version>0.14.0-rc4</mesos.version>
@@ -58,7 +58,11 @@
         </repository>
     </repositories>
     <dependencies>
-
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-library</artifactId>
+            <version>${scala.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.googlecode.protobuf-java-format</groupId>
             <artifactId>protobuf-java-format</artifactId>
