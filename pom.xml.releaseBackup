@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>mesosphere</groupId>
+    <artifactId>mesos-utils</artifactId>
+    <version>0.0.8-SNAPSHOT</version>
+
+    <properties>
+        <encoding>UTF-8</encoding>
+
+        <!-- language versions -->
+        <java.abi>1.6</java.abi>
+        <scala.version>2.10.3</scala.version>
+
+        <!-- runtime deps versions -->
+        <mesos.version>0.17.0</mesos.version>
+        <protobuf.version>2.4.1</protobuf.version>
+
+        <!-- test deps versions -->
+        <junit.version>4.11</junit.version>
+    </properties>
+
+    <distributionManagement>
+        <repository>
+            <id>aws-release</id>
+            <name>Mesosphere Release Repository</name>
+            <url>s3://downloads.mesosphere.io/maven</url>
+        </repository>
+        <snapshotRepository>
+            <id>aws-snapshot</id>
+            <name>Mesosphere Snapshot Repository</name>
+            <url>s3://downloads.mesosphere.io/maven</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <developers>
+        <!-- see git log -->
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/mesosphere/${project.artifactId}.git</connection>
+        <developerConnection>scm:git:git@github.com:mesosphere/${project.artifactId}.git</developerConnection>
+        <url>http://github.com/mesosphere/${project.artifactId}/tree/master</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <repositories>
+        <repository>
+            <id>mesosphere-public-repo</id>
+            <name>Mesosphere Public Repo</name>
+            <url>http://downloads.mesosphere.io/maven</url>
+        </repository>
+        <repository>
+            <id>twitter-repo</id>
+            <name>Twitter Maven2 Repository</name>
+            <url>http://maven.twttr.com/</url>
+        </repository>
+    </repositories>
+    <dependencies>
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-library</artifactId>
+            <version>${scala.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.protobuf-java-format</groupId>
+            <artifactId>protobuf-java-format</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.mesos</groupId>
+            <artifactId>mesos</artifactId>
+            <version>${mesos.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>${protobuf.version}</version>
+        </dependency>
+        <!-- Test scope -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <extensions>
+            <extension>
+                <groupId>org.springframework.build</groupId>
+                <artifactId>aws-maven</artifactId>
+                <version>4.8.0.RELEASE</version>
+            </extension>
+        </extensions>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>${java.abi}</source>
+                    <target>${java.abi}</target>
+                    <showDeprecation>true</showDeprecation>
+                    <showWarnings>true</showWarnings>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>net.alchim31.maven</groupId>
+                <artifactId>scala-maven-plugin</artifactId>
+                <version>3.1.5</version>
+                <executions>
+                    <execution>
+                        <id>scala-compile-first</id>
+                        <phase>process-resources</phase>
+                        <configuration>
+                            <args>
+                                <param>-unchecked</param>
+                                <param>-deprecation</param>
+                                <param>-encoding</param>
+                                <param>utf8</param>
+                            </args>
+                        </configuration>
+                        <goals>
+                            <goal>add-source</goal>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>scala-test-compile</id>
+                        <phase>process-test-resources</phase>
+                        <configuration>
+                            <args>
+                                <param>-unchecked</param>
+                                <param>-deprecation</param>
+                                <param>-encoding</param>
+                                <param>utf8</param>
+                            </args>
+                        </configuration>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <scalaVersion>${scala.version}</scalaVersion>
+                    <jvmArgs>
+                        <jvmArg>-Xmx2G</jvmArg>
+                    </jvmArgs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

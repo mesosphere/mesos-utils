@@ -13,7 +13,7 @@ case class FrameworkInfo(name: String,
                          failoverTimeout: Double = 0.0d) {
 
   def toProto = {
-    val builder = org.apache.mesos.Protos.FrameworkInfo.newBuilder
+    val builder = org.apache.mesos.Protos.FrameworkInfo.newBuilder()
       .setName(name)
       .setUser(user)
       .setRole(role)

@@ -7,7 +7,7 @@ package mesosphere.mesos.util
 case class FrameworkID(value: String) {
 
   def toProto = {
-    org.apache.mesos.Protos.FrameworkID.newBuilder
+    org.apache.mesos.Protos.FrameworkID.newBuilder()
       .setValue(value)
       .build
   }
