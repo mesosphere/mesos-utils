@@ -7,7 +7,7 @@ package mesosphere.mesos.util
 case class TaskID(value: String) {
 
   def toProto = {
-    org.apache.mesos.Protos.TaskID.newBuilder
+    org.apache.mesos.Protos.TaskID.newBuilder()
       .setValue(value)
       .build
   }

@@ -1,0 +1,4 @@
+# InteliJ IDEA files
+.idea
+atlassian-ide-plugin.xml
+mesos-utils.iml
