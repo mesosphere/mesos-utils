@@ -4,7 +4,7 @@
 
     <groupId>mesosphere</groupId>
     <artifactId>mesos-utils</artifactId>
-    <version>0.0.8-SNAPSHOT</version>
+    <version>0.0.8</version>
 
     <properties>
         <encoding>UTF-8</encoding>
@@ -15,7 +15,7 @@
 
         <!-- runtime deps versions -->
         <mesos.version>0.17.0</mesos.version>
-        <protobuf.version>2.4.1</protobuf.version>
+        <protobuf.version>2.5.0</protobuf.version>
 
         <!-- test deps versions -->
         <junit.version>4.11</junit.version>
@@ -42,7 +42,7 @@
         <connection>scm:git:git://github.com/mesosphere/${project.artifactId}.git</connection>
         <developerConnection>scm:git:git@github.com:mesosphere/${project.artifactId}.git</developerConnection>
         <url>http://github.com/mesosphere/${project.artifactId}/tree/master</url>
-        <tag>HEAD</tag>
+        <tag>0.0.8</tag>
     </scm>
 
     <repositories>
