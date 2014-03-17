@@ -4,7 +4,7 @@
 
     <groupId>mesosphere</groupId>
     <artifactId>mesos-utils</artifactId>
-    <version>0.0.7-SNAPSHOT</version>
+    <version>0.0.8-SNAPSHOT</version>
 
     <properties>
         <encoding>UTF-8</encoding>
@@ -14,7 +14,7 @@
         <scala.version>2.10.3</scala.version>
 
         <!-- runtime deps versions -->
-        <mesos.version>0.14.0-rc4</mesos.version>
+        <mesos.version>0.17.0</mesos.version>
         <protobuf.version>2.4.1</protobuf.version>
 
         <!-- test deps versions -->
