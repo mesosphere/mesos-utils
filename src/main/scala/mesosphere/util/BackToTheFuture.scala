@@ -1,16 +1,16 @@
 package mesosphere.util
 
-import scala.concurrent._
-import scala.Some
 import java.util.concurrent.ExecutionException
+import java.util.concurrent.{Future => JFuture}
+import scala.concurrent.{Future, ExecutionContext}
 
 
 object BackToTheFuture {
 
   import ExecutionContext.Implicits.global
 
-  implicit def FutureToFutureOption[T](f: java.util.concurrent.Future[T]): Future[Option[T]] = {
-    future {
+  implicit def futureToFutureOption[T](f: JFuture[T]): Future[Option[T]] = {
+    Future {
       try {
         Option(f.get)
       } catch {
@@ -19,8 +19,8 @@ object BackToTheFuture {
     }
   }
 
-  implicit def FutureToFuture[T](f: java.util.concurrent.Future[T]): Future[T] = {
-    future {
+  implicit def futureToFuture[T](f: JFuture[T]): Future[T] = {
+    Future {
       try {
         f.get
       } catch {
@@ -29,8 +29,8 @@ object BackToTheFuture {
     }
   }
 
-  implicit def ValueToFuture[T](value: T): Future[T] = {
-    future {
+  implicit def valueToFuture[T](value: T): Future[T] = {
+    Future {
       value
     }
   }

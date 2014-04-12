@@ -21,7 +21,7 @@ class FrameworkIdUtil(val state: State, val key: String = "frameworkId") {
   val defaultWait = Duration(2, "seconds")
   private val log = Logger.getLogger(getClass.getName)
 
-  import BackToTheFuture.FutureToFutureOption
+  import BackToTheFuture.futureToFutureOption
   import ExecutionContext.Implicits.global
 
   def fetch(wait: Duration = defaultWait): Option[FrameworkIDProto] = {

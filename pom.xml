@@ -4,21 +4,20 @@
 
     <groupId>mesosphere</groupId>
     <artifactId>mesos-utils</artifactId>
-    <version>0.0.8-SNAPSHOT</version>
+    <version>0.18.0-1-SNAPSHOT</version>
 
     <properties>
         <encoding>UTF-8</encoding>
 
         <!-- language versions -->
         <java.abi>1.6</java.abi>
-        <scala.version>2.10.3</scala.version>
+        <scala.version>2.10.4</scala.version>
 
         <!-- runtime deps versions -->
-        <mesos.version>0.17.0</mesos.version>
-        <protobuf.version>2.5.0</protobuf.version>
+        <mesos.version>0.18.0</mesos.version>
 
         <!-- test deps versions -->
-        <junit.version>4.11</junit.version>
+        <scalatest.version>2.1.3</scalatest.version>
     </properties>
 
     <distributionManagement>
@@ -51,11 +50,6 @@
             <name>Mesosphere Public Repo</name>
             <url>http://downloads.mesosphere.io/maven</url>
         </repository>
-        <repository>
-            <id>twitter-repo</id>
-            <name>Twitter Maven2 Repository</name>
-            <url>http://maven.twttr.com/</url>
-        </repository>
     </repositories>
     <dependencies>
         <dependency>
@@ -64,25 +58,16 @@
             <version>${scala.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.googlecode.protobuf-java-format</groupId>
-            <artifactId>protobuf-java-format</artifactId>
-            <version>1.2</version>
-        </dependency>
-        <dependency>
             <groupId>org.apache.mesos</groupId>
             <artifactId>mesos</artifactId>
             <version>${mesos.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.google.protobuf</groupId>
-            <artifactId>protobuf-java</artifactId>
-            <version>${protobuf.version}</version>
-        </dependency>
+
         <!-- Test scope -->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
+            <groupId>org.scalatest</groupId>
+            <artifactId>scalatest_2.10</artifactId>
+            <version>${scalatest.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -107,6 +92,7 @@
                     <showWarnings>true</showWarnings>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>scala-maven-plugin</artifactId>
@@ -150,6 +136,47 @@
                         <jvmArg>-Xmx2G</jvmArg>
                     </jvmArgs>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.scalatest</groupId>
+                <artifactId>scalatest-maven-plugin</artifactId>
+                <version>1.0-RC2</version>
+                <configuration>
+                    <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+                    <junitxml>.</junitxml>
+                    <filereports>WDF TestSuite.txt</filereports>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>test</id>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.scalastyle</groupId>
+                <artifactId>scalastyle-maven-plugin</artifactId>
+                <version>0.4.0</version>
+                <configuration>
+                    <failOnViolation>true</failOnViolation>
+                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                    <failOnWarning>false</failOnWarning>
+                    <sourceDirectory>${basedir}/src/main/scala</sourceDirectory>
+                    <testSourceDirectory>${basedir}/src/test/scala</testSourceDirectory>
+                    <configLocation>${basedir}/scalastyle_config.xml</configLocation>
+                    <outputEncoding>UTF-8</outputEncoding>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
