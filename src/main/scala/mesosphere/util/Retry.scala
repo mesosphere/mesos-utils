@@ -10,7 +10,8 @@ import scala.concurrent.duration.Duration
 object Retry {
 
   /**
-   * A general timed retry combinator, with a `try-catch` flavor.
+   * A general retry combinator with exponential back-off and a `try-catch`
+   * flavor.
    *
    * {{{
    * retry(2, 2.seconds) {
@@ -21,24 +22,23 @@ object Retry {
    * }
    * }}}
    *
-   * @param n       Times to retry. 0 means the block is evaluated once.
-   * @param d       Time to wait between retries.
+   * @param tries   Times to retry. 0 means the block is evaluated once.
+   * @param wait    Time to wait between retries.
    * @param fnc     Block to evaluate.
    * @param handler Handler block for exceptions.
    * @tparam T      Result type.
    * @return        Result of evaluation of `fnc`, if successful.
    */
-  def retry[T](n: Int, d: Duration)
+  def retry[T](tries: Int, wait: Duration)
               (fnc: => T)
               (handler: PartialFunction[Throwable, Any]): T = {
-    for (n <- 1 to n) {
+    for (n <- 1 to tries) {
       // Note that Try catches only non-fatal exceptions.
       val attempt: Try[T] = Try(fnc)
       if (attempt.isSuccess) return attempt.get
       attempt.recover(handler).get // Throws if handler can't handle it.
-      Thread.sleep(d.toMillis)
+      Thread.sleep(n * wait.toMillis)
     }
     fnc // Our last, best hope.
   }
-
 }
