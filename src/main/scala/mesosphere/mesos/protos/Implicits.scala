@@ -190,4 +190,36 @@ object Implicits {
   implicit def resourcesToProto(resources: Iterable[Resource]): java.lang.Iterable[Protos.Resource] = {
     resources.map(r => r: Protos.Resource).asJava
   }
+
+  implicit def textAttributeToProto(attribute: TextAttribute): Protos.Attribute = {
+    Protos.Attribute.newBuilder
+      .setType(Protos.Value.Type.TEXT)
+      .setName(attribute.name)
+      .setText(Protos.Value.Text.newBuilder.setValue(attribute.text))
+      .build
+  }
+
+  implicit def attributeToCaseClass(attribute: Protos.Attribute): Attribute = {
+    attribute.getType match {
+      case Protos.Value.Type.TEXT =>
+        TextAttribute(
+          attribute.getName,
+          attribute.getText.getValue
+        )
+      case unsupported: Protos.Value.Type =>
+        throw new IllegalArgumentException(s"Unsupported type: $unsupported")
+    }
+  }
+
+  implicit def offerIDToProto(offerId: OfferID): Protos.OfferID = {
+    Protos.OfferID.newBuilder
+      .setValue(offerId.value)
+      .build
+  }
+
+  implicit def offerIDToCaseClass(offerId: Protos.OfferID): OfferID = {
+    OfferID(
+      offerId.getValue
+    )
+  }
 }

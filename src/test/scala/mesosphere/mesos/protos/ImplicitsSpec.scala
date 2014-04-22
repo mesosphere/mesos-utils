@@ -58,4 +58,14 @@ class ImplicitsSpec extends FlatSpec {
     assert(one.slaveId == two.slaveId)
     assert(one.timestamp == two.timestamp)
   }
+
+  it should "convert TextAttribute to proto and back" in {
+    val caseClass = TextAttribute("rack", "1")
+    assert(caseClass == ((caseClass: Protos.Attribute): Attribute))
+  }
+
+  it should "convert OfferID to proto and back" in {
+    val caseClass = OfferID("123-5050-323")
+    assert(caseClass == ((caseClass: Protos.OfferID): OfferID))
+  }
 }
