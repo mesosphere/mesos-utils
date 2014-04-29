@@ -8,6 +8,7 @@ import java.util.logging.{Level, Logger}
 import scala.util.{Failure, Success}
 import scala.concurrent.{Future, Await, ExecutionContext}
 import scala.concurrent.duration.Duration
+import mesosphere.util.BackToTheFuture.BackToTheFutureTimeout
 
 /**
  * Utility class for keeping track of a framework ID in Mesos state.
@@ -23,7 +24,8 @@ class FrameworkIdUtil(val state: State, val key: String = "frameworkId") {
 
   import BackToTheFuture.futureToFutureOption
 
-  def fetch(wait: Duration = defaultWait)(implicit ec: ExecutionContext): Option[FrameworkIDProto] = {
+  def fetch(wait: Duration = defaultWait)
+           (implicit ec: ExecutionContext, timeout: BackToTheFutureTimeout): Option[FrameworkIDProto] = {
     val f: Future[Option[FrameworkIDProto]] = state.fetch(key).map {
       case Some(variable) if variable.value().length > 0 => {
         try {
@@ -41,7 +43,8 @@ class FrameworkIdUtil(val state: State, val key: String = "frameworkId") {
     Await.result(f, wait)
   }
 
-  def store(frameworkId: FrameworkIDProto)(implicit ec: ExecutionContext) {
+  def store(frameworkId: FrameworkIDProto)
+           (implicit ec: ExecutionContext, timeout: BackToTheFutureTimeout) {
     state.fetch(key).map {
       case Some(oldVariable) => {
         val newVariable = oldVariable.mutate(frameworkId.toByteArray)
@@ -58,7 +61,8 @@ class FrameworkIdUtil(val state: State, val key: String = "frameworkId") {
     }
   }
 
-  def setIdIfExists(frameworkInfo: FrameworkInfoProto.Builder)(implicit ec: ExecutionContext) {
+  def setIdIfExists(frameworkInfo: FrameworkInfoProto.Builder)
+                   (implicit ec: ExecutionContext, timeout: BackToTheFutureTimeout) {
     fetch() match {
       case Some(id) => {
         log.info("Setting framework ID to %s".format(id.getValue))
