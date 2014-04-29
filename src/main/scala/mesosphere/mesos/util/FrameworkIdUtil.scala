@@ -22,9 +22,8 @@ class FrameworkIdUtil(val state: State, val key: String = "frameworkId") {
   private val log = Logger.getLogger(getClass.getName)
 
   import BackToTheFuture.futureToFutureOption
-  import ExecutionContext.Implicits.global
 
-  def fetch(wait: Duration = defaultWait): Option[FrameworkIDProto] = {
+  def fetch(wait: Duration = defaultWait)(implicit ec: ExecutionContext): Option[FrameworkIDProto] = {
     val f: Future[Option[FrameworkIDProto]] = state.fetch(key).map {
       case Some(variable) if variable.value().length > 0 => {
         try {
@@ -42,7 +41,7 @@ class FrameworkIdUtil(val state: State, val key: String = "frameworkId") {
     Await.result(f, wait)
   }
 
-  def store(frameworkId: FrameworkIDProto) {
+  def store(frameworkId: FrameworkIDProto)(implicit ec: ExecutionContext) {
     state.fetch(key).map {
       case Some(oldVariable) => {
         val newVariable = oldVariable.mutate(frameworkId.toByteArray)
@@ -59,7 +58,7 @@ class FrameworkIdUtil(val state: State, val key: String = "frameworkId") {
     }
   }
 
-  def setIdIfExists(frameworkInfo: FrameworkInfoProto.Builder) {
+  def setIdIfExists(frameworkInfo: FrameworkInfoProto.Builder)(implicit ec: ExecutionContext) {
     fetch() match {
       case Some(id) => {
         log.info("Setting framework ID to %s".format(id.getValue))

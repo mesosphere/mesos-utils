@@ -7,9 +7,8 @@ import scala.concurrent.{Future, ExecutionContext}
 
 object BackToTheFuture {
 
-  import ExecutionContext.Implicits.global
 
-  implicit def futureToFutureOption[T](f: JFuture[T]): Future[Option[T]] = {
+  implicit def futureToFutureOption[T](f: JFuture[T])(implicit ec: ExecutionContext): Future[Option[T]] = {
     Future {
       try {
         Option(f.get)
@@ -19,7 +18,7 @@ object BackToTheFuture {
     }
   }
 
-  implicit def futureToFuture[T](f: JFuture[T]): Future[T] = {
+  implicit def futureToFuture[T](f: JFuture[T])(implicit ec: ExecutionContext): Future[T] = {
     Future {
       try {
         f.get
@@ -29,7 +28,7 @@ object BackToTheFuture {
     }
   }
 
-  implicit def valueToFuture[T](value: T): Future[T] = {
+  implicit def valueToFuture[T](value: T)(implicit ec: ExecutionContext): Future[T] = {
     Future {
       value
     }
