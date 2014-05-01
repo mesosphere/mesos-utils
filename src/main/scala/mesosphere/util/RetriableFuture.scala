@@ -23,10 +23,10 @@ object RetriableFuture {
      * @return         Future[T]
      */
     protected def retry[T](count: Int)
-                          (task: () => Future[T])
+                          (promise: () => Future[T])
                           (nextTry: Int => (() => Future[T]))
                           (implicit ec: ExecutionContext): Future[T] = {
-      task() recoverWith {
+      promise() recoverWith {
         case t =>
           _log.log(Level.WARNING, "Exception caught:", t)
           if (count < 1) {
@@ -56,11 +56,8 @@ object RetriableFuture {
      * @tparam T     output type
      * @return       Future[O]
      */
-    def apply[T](count: Int)(block: => T)
+    def apply[T](count: Int)(promise: () => Future[T])
                 (implicit ec: ExecutionContext) = {
-
-      val promise = () => future(block)
-
       retry(count)(promise)(_ => promise)
     }
   }
@@ -86,10 +83,8 @@ object RetriableFuture {
      * @return        Future[O]
      */
     def apply[T](max_try: Int, delay: Duration, factor: Int)
-                (block: => T)
+                (promise: () => Future[T])
                 (implicit ec: ExecutionContext): Future[T] = {
-
-      val promise = () => future(block)
       retry(max_try)(promise) {
         remaining: Int =>
           () => sleep(delay * scala.math.pow(factor, max_try - 1 - remaining)).flatMap(_ => promise())

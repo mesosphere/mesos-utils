@@ -2,7 +2,7 @@ package mesosphere.util
 
 import language.postfixOps
 import org.scalatest.FlatSpec
-import scala.concurrent.Await
+import scala.concurrent._
 import scala.concurrent.duration._
 
 /**
@@ -16,9 +16,11 @@ class RetriableFutureTest extends FlatSpec {
   it should "CountingRetry(2)(incrementAndFail)(1) increment 1 for three 3 times(1 + 2 re-tries)." in {
     var i = 0
 
-    val f = CountingRetry(2){
-      i += 1
-      throw new Exception()
+    val f = CountingRetry(2){ () =>
+      future {
+        i += 1
+        throw new Exception()
+      }
     }
 
     try {
@@ -36,9 +38,11 @@ class RetriableFutureTest extends FlatSpec {
     val start = System.currentTimeMillis()
     var time = 0L
     // 1stTry --> 1sec --> ReTry --> 2 sec --> ReTry --> 4sec --> ReTry.
-    val f = ExponentialBackOffRetry(3, 100 millis, 2){
-      i += 1
-      throw new Exception()
+    val f = ExponentialBackOffRetry(3, 100 millis, 2){() =>
+      future {
+        i += 1
+        throw new Exception()
+      }
     }
     f.onFailure{
       case t: Throwable =>
