@@ -8,18 +8,18 @@ import scala.concurrent.duration._
 
 object BackToTheFuture {
 
-  case class BackToTheFutureTimeout(d: Duration)
+  case class Timeout(duration: Duration)
 
   // To use this default timeout, please "import  mesosphere.util.BackToTheFuture.Implicits._"
   object Implicits {
-    implicit val default_timeout = BackToTheFutureTimeout(2 seconds)
+    implicit val defaultTimeout = Timeout(2 seconds)
   }
 
   implicit def futureToFutureOption[T](f: JFuture[T])
-                                      (implicit ec: ExecutionContext, timeout: BackToTheFutureTimeout): Future[Option[T]] = {
+                                      (implicit ec: ExecutionContext, timeout: Timeout): Future[Option[T]] = {
     Future {
       try {
-        Option(f.get(timeout.d.toMicros, TimeUnit.MICROSECONDS))
+        Option(f.get(timeout.duration.toMicros, TimeUnit.MICROSECONDS))
       } catch {
         case e: ExecutionException => throw e.getCause
       }
@@ -27,10 +27,10 @@ object BackToTheFuture {
   }
 
   implicit def futureToFuture[T](f: JFuture[T])
-                                (implicit ec: ExecutionContext, timeout: BackToTheFutureTimeout): Future[T] = {
+                                (implicit ec: ExecutionContext, timeout: Timeout): Future[T] = {
     Future {
       try {
-        f.get(timeout.d.toMicros, TimeUnit.MICROSECONDS)
+        f.get(timeout.duration.toMicros, TimeUnit.MICROSECONDS)
       } catch {
         case e: ExecutionException => throw e.getCause
       }
@@ -38,7 +38,7 @@ object BackToTheFuture {
   }
 
   implicit def valueToFuture[T](value: T)
-                               (implicit ec: ExecutionContext, to: BackToTheFutureTimeout): Future[T] = {
+                               (implicit ec: ExecutionContext, timeout: Timeout): Future[T] = {
     Future {
       value
     }
