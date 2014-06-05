@@ -6,8 +6,8 @@ Scala utilities for building distributed systems on top of Mesos.
 
 We cut releases for each recent Mesos version. Current releases are:
 
-* Mesos `0.16.0` - mesos-utils `0.16.0-1`
-* Mesos `0.17.0` - mesos-utils `0.17.0-1`
+* Mesos `0.16.0` - mesos-utils `0.16.0-2`
+* Mesos `0.17.0` - mesos-utils `0.17.0-2`
 * Mesos `0.18.2` - mesos-utils `0.18.2-2`
 
 ### Maven
