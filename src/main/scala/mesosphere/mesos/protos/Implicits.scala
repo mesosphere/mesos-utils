@@ -6,6 +6,18 @@ import com.google.protobuf.ByteString
 
 object Implicits {
 
+  implicit def executorIDToProto(executorId: ExecutorID): Protos.ExecutorID = {
+    Protos.ExecutorID.newBuilder
+      .setValue(executorId.value)
+      .build
+  }
+
+  implicit def executorIDToCaseClass(executorId: Protos.ExecutorID): ExecutorID = {
+    ExecutorID(
+      executorId.getValue
+    )
+  }
+
   implicit def frameworkIDToProto(frameworkId: FrameworkID): Protos.FrameworkID = {
     Protos.FrameworkID.newBuilder
       .setValue(frameworkId.value)
@@ -187,16 +199,15 @@ object Implicits {
     )
   }
 
-  implicit def resourcesToProto(resources: Iterable[Resource]): java.lang.Iterable[Protos.Resource] = {
-    resources.map(r => r: Protos.Resource).asJava
-  }
-
-  implicit def textAttributeToProto(attribute: TextAttribute): Protos.Attribute = {
-    Protos.Attribute.newBuilder
-      .setType(Protos.Value.Type.TEXT)
-      .setName(attribute.name)
-      .setText(Protos.Value.Text.newBuilder.setValue(attribute.text))
-      .build
+  implicit def attributeToProto(attribute: Attribute): Protos.Attribute = attribute match {
+    case TextAttribute(name, text) =>
+      Protos.Attribute.newBuilder
+        .setType(Protos.Value.Type.TEXT)
+        .setName(name)
+        .setText(Protos.Value.Text.newBuilder.setValue(text))
+        .build
+    case unsupported: Attribute =>
+      throw new IllegalArgumentException(s"Unsupported type: $unsupported")
   }
 
   implicit def attributeToCaseClass(attribute: Protos.Attribute): Attribute = {
@@ -209,6 +220,30 @@ object Implicits {
       case unsupported: Protos.Value.Type =>
         throw new IllegalArgumentException(s"Unsupported type: $unsupported")
     }
+  }
+
+  implicit def offerToProto(offer: Offer): Protos.Offer = {
+    Protos.Offer.newBuilder
+      .setId(offer.offerId)
+      .setFrameworkId(offer.frameworkId)
+      .setSlaveId(offer.slaveId)
+      .setHostname(offer.hostname)
+      .addAllResources(offer.resources.map(resourceToProto).asJava)
+      .addAllAttributes(offer.attributes.map(attributeToProto).asJava)
+      .addAllExecutorIds(offer.executorIds.map(executorIDToProto).asJava)
+      .build
+  }
+
+  implicit def offerToCaseClass(offer: Protos.Offer): Offer = {
+    Offer(
+      offer.getId,
+      offer.getFrameworkId,
+      offer.getSlaveId,
+      offer.getHostname,
+      offer.getResourcesList.asScala.map(resourceToCaseClass).toSeq,
+      offer.getAttributesList.asScala.map(attributeToCaseClass).toSeq,
+      offer.getExecutorIdsList.asScala.map(executorIDToCaseClass).toSeq
+    )
   }
 
   implicit def offerIDToProto(offerId: OfferID): Protos.OfferID = {

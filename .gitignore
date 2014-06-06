@@ -1,5 +1,6 @@
 target
 # InteliJ IDEA files
 .idea
+.idea_modules
 atlassian-ide-plugin.xml
-mesos-utils.iml
+*.iml

@@ -7,6 +7,11 @@ class ImplicitsSpec extends FlatSpec {
 
   import Implicits._
 
+  it should "convert ExecutorID to proto and back" in {
+    val caseClass = ExecutorID("klaus")
+    assert(caseClass == ((caseClass: Protos.ExecutorID): ExecutorID))
+  }
+
   it should "convert FrameworkID to proto and back" in {
     val caseClass = FrameworkID("botnet")
     assert(caseClass == ((caseClass: Protos.FrameworkID): FrameworkID))
@@ -62,6 +67,19 @@ class ImplicitsSpec extends FlatSpec {
   it should "convert TextAttribute to proto and back" in {
     val caseClass = TextAttribute("rack", "1")
     assert(caseClass == ((caseClass: Protos.Attribute): Attribute))
+  }
+
+  it should "convert Offer to proto and back" in {
+    val caseClass = Offer(
+      OfferID("offer-1"),
+      FrameworkID("marathon"),
+      SlaveID("slave-1"),
+      "host1.example.com",
+      Seq(ScalarResource("cpus", 4), ScalarResource("mem", 4096)),
+      Seq(TextAttribute("region", "us-west-2")),
+      Seq(ExecutorID("exe-1"))
+    )
+    assert(caseClass == ((caseClass: Protos.Offer): Offer))
   }
 
   it should "convert OfferID to proto and back" in {
