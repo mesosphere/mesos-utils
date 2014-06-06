@@ -1,7 +1,7 @@
 package mesosphere.mesos.protos
 
 /**
- * @author Tobi Knaup
- */
+  * @author Tobi Knaup
+  */
 
 case class OfferID(value: String)

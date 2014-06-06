@@ -1,8 +1,8 @@
 package mesosphere.mesos.protos
 
 /**
- * @author Tobi Knaup
- */
+  * @author Tobi Knaup
+  */
 
 trait TaskState
 object TaskStaging extends TaskState

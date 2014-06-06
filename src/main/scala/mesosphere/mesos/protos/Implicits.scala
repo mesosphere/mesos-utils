@@ -1,7 +1,7 @@
 package mesosphere.mesos.protos
 
 import org.apache.mesos.Protos
-import scala.collection.JavaConverters.{asJavaIterableConverter, iterableAsScalaIterableConverter}
+import scala.collection.JavaConverters.{ asJavaIterableConverter, iterableAsScalaIterableConverter }
 import com.google.protobuf.ByteString
 
 object Implicits {
@@ -143,24 +143,24 @@ object Implicits {
 
   implicit def taskStateToProto(taskState: TaskState): Protos.TaskState = {
     taskState match {
-      case TaskFailed => Protos.TaskState.TASK_FAILED
+      case TaskFailed   => Protos.TaskState.TASK_FAILED
       case TaskFinished => Protos.TaskState.TASK_FINISHED
-      case TaskKilled => Protos.TaskState.TASK_KILLED
-      case TaskLost => Protos.TaskState.TASK_LOST
-      case TaskRunning => Protos.TaskState.TASK_RUNNING
-      case TaskStaging => Protos.TaskState.TASK_STAGING
+      case TaskKilled   => Protos.TaskState.TASK_KILLED
+      case TaskLost     => Protos.TaskState.TASK_LOST
+      case TaskRunning  => Protos.TaskState.TASK_RUNNING
+      case TaskStaging  => Protos.TaskState.TASK_STAGING
       case TaskStarting => Protos.TaskState.TASK_STARTING
     }
   }
 
   implicit def taskStateToCaseClass(taskState: Protos.TaskState): TaskState = {
     taskState match {
-      case Protos.TaskState.TASK_FAILED => TaskFailed
+      case Protos.TaskState.TASK_FAILED   => TaskFailed
       case Protos.TaskState.TASK_FINISHED => TaskFinished
-      case Protos.TaskState.TASK_KILLED => TaskKilled
-      case Protos.TaskState.TASK_LOST => TaskLost
-      case Protos.TaskState.TASK_RUNNING => TaskRunning
-      case Protos.TaskState.TASK_STAGING => TaskStaging
+      case Protos.TaskState.TASK_KILLED   => TaskKilled
+      case Protos.TaskState.TASK_LOST     => TaskLost
+      case Protos.TaskState.TASK_RUNNING  => TaskRunning
+      case Protos.TaskState.TASK_STAGING  => TaskStaging
       case Protos.TaskState.TASK_STARTING => TaskStarting
     }
   }
