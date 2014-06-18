@@ -30,7 +30,7 @@ Add the Mesosphere repository and the dependency to your `pom.xml`:
     <dependencies>
         <dependency>
             <groupId>mesosphere</groupId>
-            <artifactId>mesos-utils</artifactId>
+            <artifactId>mesos-utils_2.10</artifactId>
             <version>${mesos-utils.version}</version>
         </dependency>
     </dependencies>
@@ -40,4 +40,4 @@ Add the Mesosphere repository and the dependency to your `pom.xml`:
 Add this to your SBT config:
 
     resolvers += "Mesosphere Repo" at "http://downloads.mesosphere.io/maven"
-    libraryDependencies += "mesosphere" % "mesos-utils" % "0.18.2-2"
+    libraryDependencies += "mesosphere" %% "mesos-utils" % "0.19.0-1"
