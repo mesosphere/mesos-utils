@@ -26,8 +26,9 @@ object MesosUtilsBuild extends Build {
   )
 
   lazy val publishSettings = S3Resolver.defaults ++ Seq(
+    publishMavenStyle := true,
     publishTo := Some(s3resolver.value(
-      "Mesosphere Public Repo",
+      "Mesosphere Public Repo (S3)",
       s3("downloads.mesosphere.io/maven")
     ))
   )
