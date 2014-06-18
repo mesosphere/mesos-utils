@@ -9,13 +9,14 @@ We cut releases for each recent Mesos version. Current releases are:
 * Mesos `0.16.0` - mesos-utils `0.16.0-2`
 * Mesos `0.17.0` - mesos-utils `0.17.0-2`
 * Mesos `0.18.2` - mesos-utils `0.18.2-2`
+* Mesos `0.19.0` - mesos-utils `0.19.0-1`
 
 ### Maven
 
 Add the Mesosphere repository and the dependency to your `pom.xml`:
 
     <properties>
-        <mesos-utils.version>0.18.2-2</mesos-utils.version>
+        <mesos-utils.version>0.19.0-1</mesos-utils.version>
     </properties>
     ...
     <repositories>
