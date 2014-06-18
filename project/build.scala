@@ -67,7 +67,7 @@ object Dependencies {
 object Dependency {
   object V {
     // runtime deps versions
-    val Mesos = "0.18.2"
+    val Mesos = "0.19.0"
 
     // test deps versions
     val ScalaTest = "2.1.5"
