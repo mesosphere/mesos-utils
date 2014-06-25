@@ -3,10 +3,6 @@ package mesosphere.util
 import scala.util.Try
 import scala.concurrent.duration.Duration
 
-/**
-  * @author Florian Leibert
-  */
-
 object Retry {
 
   /**
