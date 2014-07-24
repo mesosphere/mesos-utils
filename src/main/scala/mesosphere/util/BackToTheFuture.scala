@@ -2,7 +2,7 @@ package mesosphere.util
 
 import language.postfixOps
 import java.util.concurrent.{ Future => JFuture, TimeUnit, ExecutionException }
-import scala.concurrent.{ Future, ExecutionContext }
+import scala.concurrent.{ Future, ExecutionContext, blocking }
 import scala.concurrent.duration._
 
 object BackToTheFuture {
@@ -16,22 +16,26 @@ object BackToTheFuture {
 
   implicit def futureToFutureOption[T](f: JFuture[T])(implicit ec: ExecutionContext, timeout: Timeout): Future[Option[T]] = {
     Future {
-      try {
-        Option(f.get(timeout.duration.toMicros, TimeUnit.MICROSECONDS))
-      }
-      catch {
-        case e: ExecutionException => throw e.getCause
+      blocking {
+        try {
+          Option(f.get(timeout.duration.toMicros, TimeUnit.MICROSECONDS))
+        }
+        catch {
+          case e: ExecutionException => throw e.getCause
+        }
       }
     }
   }
 
   implicit def futureToFuture[T](f: JFuture[T])(implicit ec: ExecutionContext, timeout: Timeout): Future[T] = {
     Future {
-      try {
-        f.get(timeout.duration.toMicros, TimeUnit.MICROSECONDS)
-      }
-      catch {
-        case e: ExecutionException => throw e.getCause
+      blocking {
+        try {
+          f.get(timeout.duration.toMicros, TimeUnit.MICROSECONDS)
+        }
+        catch {
+          case e: ExecutionException => throw e.getCause
+        }
       }
     }
   }
