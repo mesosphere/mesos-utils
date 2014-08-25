@@ -21,6 +21,7 @@ object MesosUtilsBuild extends Build {
     scalacOptions in Compile ++= Seq("-encoding", "UTF-8", "-target:jvm-1.6", "-deprecation", "-feature", "-unchecked", "-Xlog-reflective-calls", "-Xlint"),
     javacOptions in Compile ++= Seq("-encoding", "UTF-8", "-source", "1.6", "-target", "1.6", "-Xlint:unchecked", "-Xlint:deprecation"),
     resolvers ++= Seq(
+      "Apache Public Repo"     at "https://repository.apache.org/content/repositories/releases",
       "Mesosphere Public Repo" at "http://downloads.mesosphere.io/maven"
     )
   )
@@ -68,7 +69,7 @@ object Dependencies {
 object Dependency {
   object V {
     // runtime deps versions
-    val Mesos = "0.19.0"
+    val Mesos = "0.20.0"
 
     // test deps versions
     val ScalaTest = "2.1.5"

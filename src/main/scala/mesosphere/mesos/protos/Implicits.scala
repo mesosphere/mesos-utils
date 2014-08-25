@@ -1,8 +1,9 @@
 package mesosphere.mesos.protos
 
+import com.google.protobuf.ByteString
 import org.apache.mesos.Protos
 import scala.collection.JavaConverters.{ asJavaIterableConverter, iterableAsScalaIterableConverter }
-import com.google.protobuf.ByteString
+import scala.language.implicitConversions
 
 object Implicits {
 
