@@ -41,3 +41,13 @@ Add this to your SBT config:
 
     resolvers += "Mesosphere Repo" at "http://downloads.mesosphere.io/maven"
     libraryDependencies += "mesosphere" %% "mesos-utils" % "0.19.0-1"
+
+## Developing
+
+To deploy a new version of `mesos-utils`, simply run
+
+```bash
+$ sbt release
+```
+
+and follow the prompts.
