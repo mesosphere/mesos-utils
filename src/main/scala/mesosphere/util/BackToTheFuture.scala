@@ -4,6 +4,7 @@ import language.postfixOps
 import java.util.concurrent.{ Future => JFuture, TimeUnit, ExecutionException }
 import scala.concurrent.{ Future, ExecutionContext, blocking }
 import scala.concurrent.duration._
+import scala.language.implicitConversions
 
 object BackToTheFuture {
 
