@@ -10,6 +10,7 @@ We cut releases for each recent Mesos version. Current releases are:
 * Mesos `0.17.0` - mesos-utils `0.17.0-2`
 * Mesos `0.18.2` - mesos-utils `0.18.2-2`
 * Mesos `0.19.0` - mesos-utils `0.19.0-1`
+* Mesos `0.20.0` - mesos-utils `0.20.0-1`
 
 ### Maven
 
