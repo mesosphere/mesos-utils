@@ -72,7 +72,7 @@ object Dependency {
     val Mesos = "0.20.0"
 
     // test deps versions
-    val ScalaTest = "2.1.5"
+    val ScalaTest = "2.2.1"
   }
 
   val mesos = "org.apache.mesos" % "mesos" % V.Mesos
