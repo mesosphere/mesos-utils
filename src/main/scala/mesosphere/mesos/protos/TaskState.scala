@@ -1,11 +1,11 @@
 package mesosphere.mesos.protos
 
-trait TaskState
-object TaskStaging extends TaskState
-object TaskStarting extends TaskState
-object TaskRunning extends TaskState
-object TaskFinished extends TaskState
-object TaskFailed extends TaskState
-object TaskKilled extends TaskState
-object TaskLost extends TaskState
-object TaskError extends TaskState
+sealed trait TaskState
+case object TaskStaging extends TaskState
+case object TaskStarting extends TaskState
+case object TaskRunning extends TaskState
+case object TaskFinished extends TaskState
+case object TaskFailed extends TaskState
+case object TaskKilled extends TaskState
+case object TaskLost extends TaskState
+case object TaskError extends TaskState
