@@ -8,3 +8,4 @@ object TaskFinished extends TaskState
 object TaskFailed extends TaskState
 object TaskKilled extends TaskState
 object TaskLost extends TaskState
+object TaskError extends TaskState

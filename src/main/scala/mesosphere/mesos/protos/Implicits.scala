@@ -163,6 +163,7 @@ object Implicits {
       case TaskRunning  => Protos.TaskState.TASK_RUNNING
       case TaskStaging  => Protos.TaskState.TASK_STAGING
       case TaskStarting => Protos.TaskState.TASK_STARTING
+      case TaskError    => Protos.TaskState.TASK_ERROR
     }
   }
 
@@ -175,6 +176,7 @@ object Implicits {
       case Protos.TaskState.TASK_RUNNING  => TaskRunning
       case Protos.TaskState.TASK_STAGING  => TaskStaging
       case Protos.TaskState.TASK_STARTING => TaskStarting
+      case Protos.TaskState.TASK_ERROR    => TaskError
     }
   }
 
