@@ -60,6 +60,8 @@ object Dependencies {
   val root = Seq(
     // runtime
     mesos % "compile",
+    curatorFramework % "compile",
+    curatorTest % "compile",
 
     // test
     Test.scalatest % "test"
@@ -70,12 +72,15 @@ object Dependency {
   object V {
     // runtime deps versions
     val Mesos = "0.21.0"
+    val Curator = "2.7.1"
 
     // test deps versions
     val ScalaTest = "2.2.1"
   }
 
   val mesos = "org.apache.mesos" % "mesos" % V.Mesos
+  val curatorFramework = "org.apache.curator" % "curator-framework" % V.Curator
+  val curatorTest = "org.apache.curator" % "curator-test" % V.Curator
 
   object Test {
     val scalatest = "org.scalatest" %% "scalatest" % V.ScalaTest
