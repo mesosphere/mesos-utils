@@ -15,7 +15,7 @@ object MesosUtilsBuild extends Build {
     )
   )
 
-  lazy val baseSettings = Defaults.defaultSettings ++ Seq (
+  lazy val baseSettings = Defaults.coreDefaultSettings ++ Seq (
     organization := "mesosphere",
     crossScalaVersions := Seq("2.10.4", "2.11.4"),
     scalacOptions in Compile ++= Seq("-encoding", "UTF-8", "-target:jvm-1.6", "-deprecation", "-feature", "-unchecked", "-Xlog-reflective-calls", "-Xlint"),
