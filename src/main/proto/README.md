@@ -7,7 +7,7 @@ Mesos-utils is using Google [Protocol Buffers](https://developers.google.com/pro
 - Google [Protocol Buffers](https://developers.google.com/protocol-buffers) v2.5 should be installed on the system.
 -- Note: protoc 2.6 (and higher) will generate incompatible code. Make sure your version of protoc is 2.5.
 
-## Rebuilt the protos
+## Rebuild the protos
 
 To rebuild the protos, open a terminal where the current working directory is the project directory.
 
