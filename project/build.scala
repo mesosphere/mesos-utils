@@ -17,7 +17,7 @@ object MesosUtilsBuild extends Build {
 
   lazy val baseSettings = Defaults.defaultSettings ++ Seq (
     organization := "mesosphere",
-    scalaVersion := "2.11.6",
+    scalaVersion := "2.11.7",
     scalacOptions in Compile ++= Seq("-encoding", "UTF-8", "-target:jvm-1.6", "-deprecation", "-feature", "-unchecked", "-Xlog-reflective-calls", "-Xlint"),
     javacOptions in Compile ++= Seq("-encoding", "UTF-8", "-source", "1.6", "-target", "1.6", "-Xlint:unchecked", "-Xlint:deprecation"),
     resolvers ++= Seq(
@@ -69,7 +69,7 @@ object Dependencies {
 object Dependency {
   object V {
     // runtime deps versions
-    val Mesos = "0.22.1"
+    val Mesos = "0.23.0"
 
     // test deps versions
     val ScalaTest = "2.2.1"
