@@ -15,6 +15,10 @@ We cut releases for each recent Mesos version. Current releases are:
 * Mesos `0.21.0` - mesos-utils `0.21.0-1` (cross-built for Scala 2.10 and 2.11)
 * Mesos `0.21.1` - mesos-utils `0.21.1`   (cross-built for Scala 2.10 and 2.11)
 * Mesos `0.22.0` - mesos-utils `0.22.0-1` (cross-built for Scala 2.10 and 2.11)
+* Mesos `0.22.1` - mesos-utils `0.22.1-1` (cross-built for Scala 2.10 and 2.11)
+* Mesos `0.23.0` - mesos-utils `0.23.0` (cross-built for Scala 2.10 and 2.11)
+* Mesos `0.24.0` - mesos-utils `0.24.0` (cross-built for Scala 2.10 and 2.11)
+* Mesos `0.25.0` - mesos-utils `0.25.0` (cross-built for Scala 2.10 and 2.11)
 
 ### Maven
 
@@ -22,7 +26,7 @@ Add the Mesosphere repository and the dependency to your `pom.xml`:
 
 ```xml
 <properties>
-    <mesos-utils.version>0.22.0-1</mesos-utils.version>
+    <mesos-utils.version>0.25.0</mesos-utils.version>
 </properties>
 ...
 <repositories>
@@ -48,7 +52,7 @@ Add this to your SBT config:
 
 ```scala
 resolvers += "Mesosphere Repo" at "http://downloads.mesosphere.io/maven"
-libraryDependencies += "mesosphere" %% "mesos-utils" % "0.22.0-1"
+libraryDependencies += "mesosphere" %% "mesos-utils" % "0.25.0"
 ```
 
 ## Developing
