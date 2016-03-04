@@ -161,6 +161,7 @@ object Implicits {
       case TaskKilled   => Protos.TaskState.TASK_KILLED
       case TaskLost     => Protos.TaskState.TASK_LOST
       case TaskRunning  => Protos.TaskState.TASK_RUNNING
+      case TaskKilling  => Protos.TaskState.TASK_KILLING
       case TaskStaging  => Protos.TaskState.TASK_STAGING
       case TaskStarting => Protos.TaskState.TASK_STARTING
       case TaskError    => Protos.TaskState.TASK_ERROR
@@ -174,6 +175,7 @@ object Implicits {
       case Protos.TaskState.TASK_KILLED   => TaskKilled
       case Protos.TaskState.TASK_LOST     => TaskLost
       case Protos.TaskState.TASK_RUNNING  => TaskRunning
+      case Protos.TaskState.TASK_KILLING  => TaskKilling
       case Protos.TaskState.TASK_STAGING  => TaskStaging
       case Protos.TaskState.TASK_STARTING => TaskStarting
       case Protos.TaskState.TASK_ERROR    => TaskError
