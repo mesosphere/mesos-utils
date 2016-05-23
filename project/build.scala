@@ -61,6 +61,8 @@ object Dependencies {
     // runtime
     mesos % "compile",
 
+    protobufJava % "compile",
+
     // test
     Test.scalatest % "test"
   )
@@ -69,13 +71,17 @@ object Dependencies {
 object Dependency {
   object V {
     // runtime deps versions
-    val Mesos = "0.28.0"
+    val Mesos = "0.29.0-snap1"
+
+    val ProtobufJava = "2.6.1"
 
     // test deps versions
     val ScalaTest = "2.2.1"
   }
 
   val mesos = "org.apache.mesos" % "mesos" % V.Mesos
+
+  val protobufJava = "com.google.protobuf" % "protobuf-java" % V.ProtobufJava
 
   object Test {
     val scalatest = "org.scalatest" %% "scalatest" % V.ScalaTest
