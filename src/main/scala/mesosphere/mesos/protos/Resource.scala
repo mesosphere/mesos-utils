@@ -7,4 +7,5 @@ object Resource {
   final val MEM = "mem"
   final val DISK = "disk"
   final val PORTS = "ports"
+  final val GPUS = "gpus"
 }
