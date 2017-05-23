@@ -10,3 +10,8 @@ case object TaskFailed extends TaskState
 case object TaskKilled extends TaskState
 case object TaskLost extends TaskState
 case object TaskError extends TaskState
+case object TaskDropped extends TaskState
+case object TaskUnreachable extends TaskState
+case object TaskGone extends TaskState
+case object TaskGoneByOperator extends TaskState
+case object TaskUnknown extends TaskState

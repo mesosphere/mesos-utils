@@ -156,29 +156,39 @@ object Implicits {
 
   implicit def taskStateToProto(taskState: TaskState): Protos.TaskState = {
     taskState match {
-      case TaskFailed   => Protos.TaskState.TASK_FAILED
-      case TaskFinished => Protos.TaskState.TASK_FINISHED
-      case TaskKilled   => Protos.TaskState.TASK_KILLED
-      case TaskLost     => Protos.TaskState.TASK_LOST
-      case TaskRunning  => Protos.TaskState.TASK_RUNNING
-      case TaskKilling  => Protos.TaskState.TASK_KILLING
-      case TaskStaging  => Protos.TaskState.TASK_STAGING
-      case TaskStarting => Protos.TaskState.TASK_STARTING
-      case TaskError    => Protos.TaskState.TASK_ERROR
+      case TaskFailed         => Protos.TaskState.TASK_FAILED
+      case TaskFinished       => Protos.TaskState.TASK_FINISHED
+      case TaskKilled         => Protos.TaskState.TASK_KILLED
+      case TaskLost           => Protos.TaskState.TASK_LOST
+      case TaskRunning        => Protos.TaskState.TASK_RUNNING
+      case TaskKilling        => Protos.TaskState.TASK_KILLING
+      case TaskStaging        => Protos.TaskState.TASK_STAGING
+      case TaskStarting       => Protos.TaskState.TASK_STARTING
+      case TaskError          => Protos.TaskState.TASK_ERROR
+      case TaskDropped        => Protos.TaskState.TASK_DROPPED
+      case TaskUnreachable    => Protos.TaskState.TASK_UNREACHABLE
+      case TaskGone           => Protos.TaskState.TASK_GONE
+      case TaskGoneByOperator => Protos.TaskState.TASK_GONE_BY_OPERATOR
+      case TaskUnknown        => Protos.TaskState.TASK_UNKNOWN
     }
   }
 
   implicit def taskStateToCaseClass(taskState: Protos.TaskState): TaskState = {
     taskState match {
-      case Protos.TaskState.TASK_FAILED   => TaskFailed
-      case Protos.TaskState.TASK_FINISHED => TaskFinished
-      case Protos.TaskState.TASK_KILLED   => TaskKilled
-      case Protos.TaskState.TASK_LOST     => TaskLost
-      case Protos.TaskState.TASK_RUNNING  => TaskRunning
-      case Protos.TaskState.TASK_KILLING  => TaskKilling
-      case Protos.TaskState.TASK_STAGING  => TaskStaging
-      case Protos.TaskState.TASK_STARTING => TaskStarting
-      case Protos.TaskState.TASK_ERROR    => TaskError
+      case Protos.TaskState.TASK_FAILED           => TaskFailed
+      case Protos.TaskState.TASK_FINISHED         => TaskFinished
+      case Protos.TaskState.TASK_KILLED           => TaskKilled
+      case Protos.TaskState.TASK_LOST             => TaskLost
+      case Protos.TaskState.TASK_RUNNING          => TaskRunning
+      case Protos.TaskState.TASK_KILLING          => TaskKilling
+      case Protos.TaskState.TASK_STAGING          => TaskStaging
+      case Protos.TaskState.TASK_STARTING         => TaskStarting
+      case Protos.TaskState.TASK_ERROR            => TaskError
+      case Protos.TaskState.TASK_DROPPED          => TaskDropped
+      case Protos.TaskState.TASK_UNREACHABLE      => TaskUnreachable
+      case Protos.TaskState.TASK_GONE             => TaskGone
+      case Protos.TaskState.TASK_GONE_BY_OPERATOR => TaskGoneByOperator
+      case Protos.TaskState.TASK_UNKNOWN          => TaskUnknown
     }
   }
 
