@@ -64,3 +64,33 @@ $ sbt release
 ```
 
 and follow the prompts.
+
+## Local publish
+
+### local sbt repo
+
+To publish a new version of `mesos-utils` into local sbt repo, simply run
+
+```bash
+$ sbt publish-local
+```
+
+then it will be published (default) to
+
+`${HOME}/.ivy2/local/mesosphere/mesos-utils_${SCALA_VERSION}/${VERSION}`
+
+Thus you can add the dependency into your sbt configuration.
+
+### local maven repo
+
+To publish a new version of `mesos-utils` into local maven repo, simply run
+
+```bash
+$ sbt publishM2
+```
+
+then it will be published (default) to
+
+`${HOME}/.m2/repository/mesosphere/mesos-utils_${SCALA_VERSION}/${VERSION}/`
+
+Thus you can add the dependency in pom.xml of your maven project.
